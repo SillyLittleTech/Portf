@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
+// NOTE: Template-friendly remote data URL. In production set VITE_REMOTE_DATA_URL
+// to your own data host. During development the dev server serves local fixtures
+// from `/__remote-data/data`.
 const DATA_BASE_URL = import.meta.env.DEV
   ? "/__remote-data/data"
-  : "https://data.kiya.cat/data";
+  : (import.meta.env.VITE_REMOTE_DATA_URL as string) || "https://data.example.com/data";
 
-const CACHE_NAMESPACE = "kiya-portfolio::remote-data" as const;
+// LocalStorage namespace for cached remote data. Rename if you fork the template
+// to avoid collisions with other apps in the browser.
+const CACHE_NAMESPACE = "template-portfolio::remote-data" as const;
 const CACHE_TTL_MS = import.meta.env.DEV ? 1000 * 60 * 5 : 1000 * 60 * 60 * 6;
 const BUILD_SIGNATURE =
   typeof __BUILD_TIME__ === "string" ? __BUILD_TIME__ : "dev-local";

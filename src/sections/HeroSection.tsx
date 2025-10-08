@@ -49,7 +49,8 @@ function HeroCard({ prefersReducedMotion, theme, socialLinks }: HeroCardProps) {
             greetingChip,
           )}
         >
-          Hello, I’m <AdminHint>Kiya Rose</AdminHint>! 👋
+          {/* Replace the display name below with your own name */}
+          Hello, I’m <AdminHint>Your Name</AdminHint>! 👋
         </span>
         <div className="space-y-4">
           <h1
@@ -58,7 +59,7 @@ function HeroCard({ prefersReducedMotion, theme, socialLinks }: HeroCardProps) {
               headlineColor,
             )}
           >
-            Health IT & Support Pro in Training
+            Your headline — e.g. "Frontend engineer, designer, or product builder"
           </h1>
           <p className={cn("max-w-2xl text-lg", blurbColor)}>
             I spend my free time building code projects while preparing to help

@@ -11,7 +11,8 @@ import { cn } from "../utils/cn";
 import { navigateTo } from "../utils/navigation";
 import { getCspNonce } from "../utils/getCspNonce";
 
-const EMAIL = "kiya.rose@sillylittle.tech";
+// Replace this with your public contact email or keep mailto-only behavior.
+const EMAIL = (import.meta.env.VITE_PUBLIC_EMAIL as string) || "your.email@example.com";
 
 const STRICT_CORS_PATTERNS = ["cors", "cross-origin", "opaque response"];
 const GENERIC_CORS_PATTERNS = ["load failed", "failed to fetch"];
@@ -41,7 +42,9 @@ const getPageclipStyleElement = (): HTMLStyleElement | null => {
 
 const TURNSTILE_SCRIPT_SRC =
   "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-const DEFAULT_TURNSTYLE_SITE_KEY = "0x4AAAAAAB33nR-Wv_kJwwAA";
+// Default placeholders for template usage. Set VITE_TURNSTILE_SITE_KEY or
+// VITE_TURNSTYLE_SITE in your environment to enable captcha checks.
+const DEFAULT_TURNSTYLE_SITE_KEY = "";
 const rawTurnstileSiteKey =
   (import.meta.env.VITE_TURNSTILE_SITE_KEY ??
     import.meta.env.VITE_TURNSTYLE_SITE ??
@@ -53,7 +56,8 @@ const TURNSTILE_SITE_KEY = trimmedTurnstileSiteKey
   ? trimmedTurnstileSiteKey
   : undefined;
 
-const DEFAULT_PAGECLIP_API_KEY = "YLDHAohhRJSQJX3izF30KRLNxy5NYhiz";
+// Pageclip is optional — set VITE_PAGECLIP_API_KEY if you use a Pageclip form.
+const DEFAULT_PAGECLIP_API_KEY = "";
 const rawPageclipApiKey = (import.meta.env.VITE_PAGECLIP_API_KEY ??
   DEFAULT_PAGECLIP_API_KEY ??
   "") as string | undefined;

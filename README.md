@@ -1,3 +1,79 @@
+# KR_Portf — Portfolio template
+
+This repository is a lightweight, opinionated portfolio starter built with Vite + React + TypeScript and Tailwind CSS. It's been refactored to be a reusable template: fork or clone, then replace the content data and assets to make it your own.
+
+Why use this template?
+- Simple single-page layout made of modular sections (`src/sections/*`).
+- Data-driven: edit `src/data/*` to update content (no deep React changes required).
+- Accessible defaults: prefers-reduced-motion support, semantic HTML, and modest Framer Motion usage.
+
+Quickstart (local)
+1. Clone or fork this repo and open it locally.
+2. Install dependencies:
+
+```bash
+npm ci
+```
+
+3. Start the dev server:
+
+```bash
+npm run dev
+# open http://localhost:5173
+```
+
+4. Lint / build / test:
+
+```bash
+npm run lint
+npm run build
+npm run test
+```
+
+Where to edit content (most common customizations)
+- `src/data/projects.ts` — your projects list (title, description, tech, links, images).
+- `src/data/experience.ts`, `src/data/education.ts`, `src/data/certifications.ts` — timeline and credentials.
+- `src/data/skills.ts` — skills shown in the Skills section (supports `isDeveloping` flag for "in progress" items).
+- `src/data/socials.ts` — social links and icons.
+- `src/sections/HeroSection.tsx` — top-of-page hero copy and primary CTA if you need custom layout.
+- `src/sections/ContactSection.tsx` — contact flow (mailto generation + copy-to-clipboard). If you prefer a server-backed form, replace this component.
+- `src/components/SiteFooter.tsx` & `src/data/build.ts` — footer and build-label logic (the build label persists a short random prefix per build signature in `localStorage`).
+- `public/` — replace `favicon.svg`, `index.html` fallback content, and `public/fonts/NanumPenScript-Regular.ttf` if you want a different display font.
+
+Environment variables
+- Use `.env.local` for local secrets and GitHub/CI Secrets for automated deploys. Variables use the `VITE_` prefix.
+- Important: `VITE_TURNSTYLE_SITE` is intentionally spelled without the second `t` in this codebase. Keep it as-is if referenced in the code. (There may also be `VITE_TURNSTILE_SITE_KEY` in some docs; inspect `src/sections/ContactSection.tsx`.)
+
+Development & deployment notes
+- Dev server: `npm run dev` (Vite).
+- Build: `npm run build` produces `dist/`.
+- Preview hosting locally with Firebase emulators:
+
+```bash
+firebase emulators:start --only hosting
+```
+
+- CI / preview deploys: this repo contains GitHub Actions and Cloudflare Pages / Wrangler examples. You can deploy `dist/` with `npx wrangler pages deploy dist --project-name <name>` or use Firebase hosting in your own project.
+
+Testing & visual checks
+- Playwright is configured under `tests/` and `playwright.config.ts` for accessibility and visual diffs. Run the test suite with `npm run test`.
+
+Styling & accessibility
+- Compose Tailwind utility classes directly in JSX. Follow the existing component patterns in `src/sections/*` for spacing and accessible markup.
+- Respect `prefers-reduced-motion` — Framer Motion is used sparingly. See `src/providers/ThemeProvider.tsx` for theme handling.
+
+Template checklist — things to replace when making it yours
+- [ ] Replace site name and printed name (`.font-kiya`) text instances (`src/components/*`, `public/index.html`).
+- [ ] Update `src/data/*` files (projects, socials, skills, experience).
+- [ ] Replace images in `src/assets/` and files in `public/` (favicon, fonts).
+- [ ] Review `src/sections/ContactSection.tsx` to choose mailto-only or server-backed forms; set environment variables if using captcha or Pageclip.
+- [ ] Run `npm run lint` and `npm run build` to ensure no local errors after changes.
+
+License
+- The project uses the repository's BSD 3-Clause license (see `LICENSE`). Keep license headers intact when copying code.
+
+Need help or want this template tuned for a specific workflow?
+- Tell me what you want to change (simpler hero, blog-style pages, serverless contact form). I can add examples or small helper scripts (e.g., a CLI to scaffold `src/data/projects.ts` entries).
 # Kiya Rose Portfolio
 
 My Personal Portfolio. I put things here, hopefully it looks good.

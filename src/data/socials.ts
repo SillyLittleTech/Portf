@@ -13,7 +13,7 @@ export const socialsPlaceholder: SocialLink[] = [
   {
     id: "socials-unavailable",
     label: "Socials unavailable",
-    href: "https://status.sillylittle.tech/",
+    href: "https://example.com/status",
     icon: "mdi:alert-circle-outline",
   },
 ];

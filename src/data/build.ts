@@ -1,5 +1,7 @@
 const RANDOM_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const PREFIX_STORAGE_KEY = "kiya-portfolio::build-prefix";
+// Local storage key for the build label prefix. Keep this but the prefix name
+// is template-scoped so downstream users can safely fork without colliding.
+const PREFIX_STORAGE_KEY = "template-portfolio::build-prefix";
 const PREFIX_LENGTH = 4;
 const BUILD_TIME_ISO =
   typeof __BUILD_TIME__ === "string" ? __BUILD_TIME__ : null;

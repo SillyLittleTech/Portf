@@ -42,7 +42,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: kiyaverse
+          # Replace projectName with your Cloudflare Pages project name
+          projectName: template-portfolio
           branch: ${{ github.event.pull_request.head.ref }}
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}

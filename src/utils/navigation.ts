@@ -1,4 +1,6 @@
-const NAVIGATION_EVENT = "kiya:navigate";
+// Custom event used for client-side navigation hooks. Keep this consistent if
+// you add listeners elsewhere in the app.
+const NAVIGATION_EVENT = "template-portfolio:navigate";
 
 type NavigationListener = (path: string) => void;
 

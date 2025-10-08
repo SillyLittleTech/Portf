@@ -9,8 +9,8 @@ test.describe("Theme Consistency", () => {
 
     // Clear any existing theme preference
     await page.evaluate(() => {
-      window.localStorage.removeItem("kiya-theme");
-      window.localStorage.removeItem("kiya-theme-user-set");
+      window.localStorage.removeItem("template-theme");
+      window.localStorage.removeItem("template-theme-user-set");
     });
 
     // Reload to ensure clean state
@@ -24,7 +24,7 @@ test.describe("Theme Consistency", () => {
 
     const getUserSetFlag = () =>
       page.evaluate(
-        () => window.localStorage.getItem("kiya-theme-user-set") === "true",
+        () => window.localStorage.getItem("template-theme-user-set") === "true",
       );
 
     // Initially, user should not have set theme manually
@@ -76,8 +76,8 @@ test.describe("Theme Consistency", () => {
 
     // Clear any existing preferences
     await page.evaluate(() => {
-      window.localStorage.removeItem("kiya-theme");
-      window.localStorage.removeItem("kiya-theme-user-set");
+      window.localStorage.removeItem("template-theme");
+      window.localStorage.removeItem("template-theme-user-set");
     });
 
     await page.reload();
@@ -103,7 +103,7 @@ test.describe("Theme Consistency", () => {
 
     // User preference flag should also persist
     const userSetFlag = await page.evaluate(() =>
-      window.localStorage.getItem("kiya-theme-user-set"),
+      window.localStorage.getItem("template-theme-user-set"),
     );
     expect(userSetFlag).toBe("true");
   });

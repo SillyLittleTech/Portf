@@ -12,11 +12,11 @@ export const experienceFallback: ExperienceEntry[] = [];
 
 export const experiencePlaceholder: ExperienceEntry[] = [
   {
-    company: "Unable to load experience timeline",
-    role: "Please try again later.",
-    dates: "—",
-    description:
-      "We weren't able to load experience details from data.kiya.cat.",
-    tech: ["Connection issue"],
+    // Template placeholder entry. Replace with your own roles/companies.
+    company: "Example Co.",
+    role: "Product Designer",
+    dates: "2022 — Present",
+    description: "Short description of the role and accomplishments.",
+    tech: ["Figma", "React", "TypeScript"],
   },
 ];

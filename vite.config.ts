@@ -125,7 +125,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/__remote-data": {
-        target: "https://data.kiya.cat",
+        // Template default for remote data proxy. Point this at your data host
+        // or set VITE_REMOTE_DATA_URL in production builds.
+        target: "https://data.example.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/__remote-data/, ""),
       },

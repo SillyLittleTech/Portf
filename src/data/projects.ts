@@ -11,9 +11,10 @@ export const projectsFallback: Project[] = [];
 
 export const projectsPlaceholder: Project[] = [
   {
-    title: "Projects failed to load",
-    description:
-      "We couldn't reach data.kiya.cat to fetch the latest projects.",
-    tech: ["Connection issue"],
+    // Example project entry — replace with your real projects.
+    title: "Example Project",
+    description: "A short description of this sample project and its goals.",
+    tech: ["React", "TypeScript"],
+    link: "https://example.com",
   },
 ];

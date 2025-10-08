@@ -3,8 +3,10 @@ import type { PropsWithChildren } from "react";
 import { ThemeContext, type Theme } from "./theme-context";
 import { safeConsoleWarn } from "../utils/errorSanitizer";
 
-const THEME_STORAGE_KEY = "kiya-theme";
-const USER_PREFERENCE_KEY = "kiya-theme-user-set";
+// LocalStorage keys for theme prefs. Rename these if you fork the template to
+// avoid colliding with other apps in the same browser profile.
+const THEME_STORAGE_KEY = "template-theme";
+const USER_PREFERENCE_KEY = "template-theme-user-set";
 
 function applyTheme(theme: Theme, userHasSetTheme: boolean) {
   if (typeof document === "undefined") return;

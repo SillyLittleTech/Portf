@@ -7,7 +7,9 @@
 - `npm run build` outputs to `dist/`, which Firebase Hosting serves via `firebase.json`.
 - `.github/workflows/` houses CI/CD pipelines—update them when scripts or deploy behavior changes.
 - Top-level layout pieces (`SiteHeader`, `PrimaryNav`, `SiteFooter`) live in `src/App.tsx`; keep large JSX trees broken into helpers to satisfy lint rules.
-- The root `LICENSE` is BSD 3-Clause (2025, Kiya Rose); mirror that notice when legal text appears elsewhere.
+- The root `LICENSE` is BSD 3-Clause (2025, Kiya Rose); preserve this BSD-3-Clause notice and the original copyright
+	line in any redistribution or derived work. Do not remove or replace this license without explicit permission from
+	the copyright holder. When referencing the license in documentation, point to `LICENSE` in the repo.
 - `src/data/build.ts` exposes helpers for the build label and build timestamp: the label stores a random prefix in `localStorage` keyed by the build signature so it only changes when the code does, and `getBuildUpdatedAt()` surfaces the deploy timestamp for privacy/legal copy—leave that flow intact.
 - `src/AppRouter.tsx`, `src/pages/PrivacyPolicyPage.tsx`, and `src/utils/navigation.ts` handle lightweight client-side routing so `/privacy-policy` renders inside the React app without duplicating static assets.
 
@@ -35,8 +37,8 @@
 - Accent palette leans warm orange and pink (`accent.DEFAULT` `#f97316`, `accent.muted` `#ec4899`); dark mode remains deep slate—match those tones across new UI.
 - Use rounded Material Symbols icons for navigation, social chips, and headers to keep iconography consistent.
 - Drive animations with Framer Motion; always respect `prefers-reduced-motion` and provide sensible fallbacks (toggle animation uses short fade/slide, not full spins).
-- The custom `.font-kiya` (Nanum Pen Script) highlights the name “Kiya Rose”; apply it consistently when the name appears in new sections.
-- The footer should surface a dynamic current year, the typographic © symbol, the `.font-kiya` name, and the build label (prefix = last edit signature, suffix = render id) alongside the “Crafted with React, Tailwind CSS, and Firebase.” line, with a pill-style tooltip explaining the two segments.
+- The custom `.font-kiya` (Nanum Pen Script) highlights the site owner's name (for example, “Your Name”); apply it consistently when the owner name appears in new sections. Add a comment near any hard-coded display name so template users know to update the font usage.
+- The footer should surface a dynamic current year, the typographic © symbol, the `.font-kiya` display name (e.g. “Your Name”), and the build label (prefix = last edit signature, suffix = render id) alongside the “Crafted with React, Tailwind CSS, and Firebase.” line, with a pill-style tooltip explaining the two segments. Keep a short inline comment pointing at `src/data/build.ts` so template users can find where the build label is generated.
 - Privacy and legal copy should pull their “Last updated” value from `getBuildUpdatedAt()` so the date reflects the latest build automatically—never hardcode the date.
 - Developing skills use a dotted accent pill—follow the existing `isDeveloping` pattern in `SkillsSection` when adding new skills.
 - The contact form generates a `mailto:` draft; keep it client-only (no POST handlers) and preserve the copy-to-clipboard CTA.

@@ -10,8 +10,9 @@ import { cn } from "../utils/cn";
 import { goBackOrNavigateHome } from "../utils/navigation";
 import { getBuildUpdatedAt } from "../data/build";
 
-const GDPR_CONTACT_EMAIL = "gdpr@sillylittle.tech";
-const PRIVACY_CONTACT_EMAIL = "privacy@sillylittle.tech";
+// Replace these with your security and privacy contact addresses.
+const GDPR_CONTACT_EMAIL = (import.meta.env.VITE_GDPR_CONTACT as string) || "security@example.com";
+const PRIVACY_CONTACT_EMAIL = (import.meta.env.VITE_PRIVACY_CONTACT as string) || "privacy@example.com";
 
 type PolicySection = {
   title: string;
@@ -262,7 +263,7 @@ export function PrivacyPolicyPage() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    document.title = "Privacy Policy • Kiya Rose";
+    document.title = "Privacy Policy • Your Name";
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0 });
     }
@@ -418,12 +419,12 @@ function PolicyHeading() {
 function PolicyIntro() {
   return (
     <p className={cn(paragraphClass, "mt-4")}>
-      Your privacy matters. This Privacy Policy explains how I,{" "}
-      <AdminHint>Kiya Rose</AdminHint>, collect, use, and safeguard personal
-      information when you visit{" "}
-      <a href="https://sillylittle.tech" rel="noreferrer">
-        sillylittle.tech
-      </a>
+      Your privacy matters. This Privacy Policy explains how the site owner
+      (replace the name below) collects, uses, and safeguards personal
+      information when you visit the deployed site, interact with the contact
+      form, or engage with analytics services.
+      {" "}
+      <AdminHint>Your Name</AdminHint>
       , interact with the contact form, or engage with the analytics services
       that power the site.
     </p>
