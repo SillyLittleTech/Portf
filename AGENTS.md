@@ -103,7 +103,7 @@ The `.zap-ignore` file contains known/accepted alerts that don't need fixing:
 - **90005** (Sec-Fetch headers): Browser-set request headers, not response headers
 - **10049/10015/10050** (Cache directives): Properly configured
 
-The ZAP workflow (`.github/workflows/zap.yml`) scans the production site at `https://kiya.cat` nightly to detect security issues.
+The ZAP workflow (`.github/workflows/zap.yml`) scans the production site at `https://your.website` nightly to detect security issues.
 
 When ZAP reports issues:
 

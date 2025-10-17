@@ -96,6 +96,6 @@ If any section is unclear or you want more repo file examples, say which area to
 ## Security & ZAP Scanning
 
 - All security headers are centrally configured in `security-headers.config.ts` and deployed via `public/_headers` (Cloudflare Pages), `firebase.json` (Firebase Hosting), and `vite.config.ts` (local preview).
-- The ZAP workflow scans `https://kiya.cat` nightly; check `.zap-ignore` for known/accepted alerts.
+- The ZAP workflow scans `https://your.website` nightly; check `.zap-ignore` for known/accepted alerts.
 - When ZAP reports issues, verify headers are in `public/_headers` and deployed properly before adding to `.zap-ignore`.
 - Use `safeConsoleWarn()` and `safeConsoleError()` from `src/utils/errorSanitizer.ts` instead of raw console methods to prevent information disclosure.

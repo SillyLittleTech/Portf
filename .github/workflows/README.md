@@ -37,7 +37,7 @@ This directory contains automated workflows for the portfolio project. Workflows
 
 - **`zap.yml`** - ZAP Security Baseline Scan
   - Runs nightly at 06:00 UTC
-  - Scans production site (https://kiya.cat)
+  - Scans production site (https://your.website)
   - Creates issues for security findings
 
 - **`security-headers-parity.yml`** - Security Headers Verification
