@@ -68,6 +68,7 @@ Template checklist — things to replace when making it yours
 - [ ] Replace site name and printed name (`.font-kiya`) text instances (`src/components/*`, `public/index.html`).
 - [ ] Update `src/data/*` files (projects, socials, skills, experience).
 - Or alternrativly spin up a database (like an R2 server) and host the content there updating useRemoteContent.ts
+- See the README in `/src/data` for information on how to get started.
 - [ ] Replace images in `src/assets/` and files in `public/` (favicon, fonts).
 - [ ] Review `src/sections/ContactSection.tsx` to choose mailto-only or server-backed forms; set environment variables if using captcha or Pageclip.
 - [ ] Replace the target URL in `.github/workflows/ZAP.yml` with your production URL to ensure good security. 
