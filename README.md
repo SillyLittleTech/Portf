@@ -31,6 +31,8 @@ npm run test
 ```
 
 Where to edit content (most common customizations)
+
+Data files in my production build are hosted on a Cloudflare R2 server and data is pulled at runtime. However, you do not need this to be your case, as you can embed data in the following files: 
 - `src/data/projects.ts` — your projects list (title, description, tech, links, images).
 - `src/data/experience.ts`, `src/data/education.ts`, `src/data/certifications.ts` — timeline and credentials.
 - `src/data/skills.ts` — skills shown in the Skills section (supports `isDeveloping` flag for "in progress" items).
@@ -42,12 +44,12 @@ Where to edit content (most common customizations)
 
 Environment variables
 - Use `.env.local` for local secrets and GitHub/CI Secrets for automated deploys. Variables use the `VITE_` prefix.
-- Important: `VITE_TURNSTYLE_SITE` is intentionally spelled without the second `t` in this codebase. Keep it as-is if referenced in the code. (There may also be `VITE_TURNSTILE_SITE_KEY` in some docs; inspect `src/sections/ContactSection.tsx`.)
+- Important: `VITE_TURNSTYLE_SITE` Sometimes `VITE_TURNSTILE_SITE_KEY`,  `src/sections/ContactSection.tsx`. (I'm sorry user, my spelling is bad and I did an oopsy)
 
 Development & deployment notes
 - Dev server: `npm run dev` (Vite).
 - Build: `npm run build` produces `dist/`.
-- Preview hosting locally with Firebase emulators:
+- Preview hosting locally with either firebase (as we have a firebase.json file setuo) or Cloudflare pages (we have a wrangler.toml and _headers file), I'm sure although if you know a little bit about coding, you should be able to set it up with any static hosting service you prefer... or if you are insane you can host it yourself.
 
 ```bash
 firebase emulators:start --only hosting
@@ -65,8 +67,12 @@ Styling & accessibility
 Template checklist — things to replace when making it yours
 - [ ] Replace site name and printed name (`.font-kiya`) text instances (`src/components/*`, `public/index.html`).
 - [ ] Update `src/data/*` files (projects, socials, skills, experience).
+- Or alternrativly spin up a database (like an R2 server) and host the content there updating useRemoteContent.ts
+- See the README in `/src/data` for information on how to get started.
 - [ ] Replace images in `src/assets/` and files in `public/` (favicon, fonts).
 - [ ] Review `src/sections/ContactSection.tsx` to choose mailto-only or server-backed forms; set environment variables if using captcha or Pageclip.
+- [ ] Replace the target URL in `.github/workflows/ZAP.yml` with your production URL to ensure good security. 
+- [ ] Disable any workflows you do not want/need. 
 - [ ] Run `npm run lint` and `npm run build` to ensure no local errors after changes.
 
 License
