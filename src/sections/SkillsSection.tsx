@@ -28,6 +28,7 @@ import {
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useRemoteData } from "../hooks/useRemoteData";
 import { useTheme } from "../hooks/useTheme";
+import { useTranslation } from "../hooks/useTranslation";
 import { cn } from "../utils/cn";
 import { themedClass } from "../utils/themeClass";
 import { skillIcons } from "../utils/icons";
@@ -220,8 +221,9 @@ export function SkillsSection() {
       <div className="card-surface space-y-8">
         <SectionHeader
           id="skills"
-          icon="material-symbols:auto-awesome-rounded"
-          label="Skills"
+          label={t.skills.title}
+          eyebrow="Strengths"
+          eyebrow={t.skills.eyebrow}
           eyebrow="Strengths"
         />
         <SkillsBoard
