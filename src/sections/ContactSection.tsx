@@ -6,6 +6,7 @@ import { SectionContainer } from "../components/SectionContainer";
 import { SectionHeader } from "../components/SectionHeader";
 import { safeConsoleWarn, safeConsoleError } from "../utils/errorSanitizer";
 import { useTheme } from "../hooks/useTheme";
+import { useTranslation } from "../hooks/useTranslation";
 import { themedClass } from "../utils/themeClass";
 import { cn } from "../utils/cn";
 import { navigateTo } from "../utils/navigation";
@@ -45,8 +46,6 @@ const TURNSTILE_SCRIPT_SRC =
 // Default placeholders for template usage. Set VITE_TURNSTILE_SITE_KEY or
 // VITE_TURNSTYLE_SITE in your environment to enable captcha checks.
 const DEFAULT_TURNSTYLE_SITE_KEY = "";
-const rawTurnstileSiteKey =
-  (import.meta.env.VITE_TURNSTILE_SITE_KEY ??
     import.meta.env.VITE_TURNSTYLE_SITE ??
     DEFAULT_TURNSTYLE_SITE_KEY ??
     "") ||
@@ -170,6 +169,7 @@ type ContactCardProps = {
   prefersReducedMotion: boolean;
   errorMessage: string | null;
   onErrorChange: (message: string | null) => void;
+  t: ReturnType<typeof useTranslation>["t"];
 };
 
 function ContactCard({
@@ -178,13 +178,14 @@ function ContactCard({
   prefersReducedMotion,
   errorMessage,
   onErrorChange,
+  t,
 }: ContactCardProps) {
   return (
     <div className="card-surface space-y-8">
       <SectionHeader
         id="contact"
         icon="material-symbols:contact-mail-rounded"
-        label="Contact"
+        label={t.contact.title}
         eyebrow="Let’s Talk"
       />
       <div className="flex flex-col gap-8 md:flex-row">
@@ -835,6 +836,7 @@ export function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const { t } = useTranslation();
 
   const handleCopy = useCallback(async () => {
     try {
@@ -855,6 +857,7 @@ export function ContactSection() {
         prefersReducedMotion={prefersReducedMotion}
         errorMessage={errorMessage}
         onErrorChange={setErrorMessage}
+        t={t}
       />
     </SectionContainer>
   );
