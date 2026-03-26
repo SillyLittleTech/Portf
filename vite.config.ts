@@ -113,6 +113,34 @@ function serveSecurityHeaders(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
+  // ---------------------------------------------------------------------------
+  // BASE PATH – read this if your site loads a blank page after deploying
+  // ---------------------------------------------------------------------------
+  // Vite rewrites every asset URL (JS chunks, CSS, fonts, images) at build time
+  // to be relative to the `base` value below.  When the value is wrong, the
+  // browser requests assets from the wrong path and the page is blank.
+  //
+  // SCENARIO A – root domain / subdomain  (e.g. https://yourname.github.io or
+  //               https://portfolio.example.com)
+  //   Leave VITE_BASE_URL unset.  `base` defaults to "/" and everything works
+  //   as-is.  No changes needed here or in the build script.
+  //
+  // SCENARIO B – GitHub Pages repo sub-path  (e.g. https://org.github.io/Portf
+  //               or a custom domain like https://projects.example.com/Portf/)
+  //   Set VITE_BASE_URL to the sub-path, INCLUDING the leading and trailing
+  //   slash (e.g. "/Portf/").  The `build:pages` script in package.json does
+  //   this automatically for the default showcase deployment.  If your repo has
+  //   a different name, update the value in:
+  //     • the `build:pages` script in package.json
+  //     • the VITE_BASE_URL env var in .github/workflows/github-pages.yml
+  //
+  // SCENARIO C – any other prefix  (e.g. Cloudflare Pages, Netlify, custom CDN)
+  //   Pass VITE_BASE_URL=/<your-prefix>/ to the build command, or hard-code the
+  //   value here if it never changes.  The router in
+  //   src/utils/navigation.ts reads import.meta.env.BASE_URL at runtime and
+  //   strips the prefix automatically, so no other files need changing.
+  // ---------------------------------------------------------------------------
+  base: process.env.VITE_BASE_URL ?? "/",
   plugins: [
     react(),
     copyAdminAssets(),

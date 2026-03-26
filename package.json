@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:pages": "npm run build",
+    "build:pages": "tsc -b && VITE_BASE_URL=/Portf/ vite build",
+    "build:pages:help": "echo \"\\nTEMPLATE USERS: build:pages sets VITE_BASE_URL=/Portf/ for the showcase sub-path.\\nIf your repo has a different name, replace /Portf/ with /<your-repo-name>/ in this script\\nand in the VITE_BASE_URL env var in .github/workflows/github-pages.yml.\\nDeploying to a root domain? Use 'npm run build' instead (no sub-path needed).\\n\"",
     "lint": "eslint .",
     "preview": "vite preview --strictPort",
     "css:watch": "postcss src/index.css --config . --output dist/style.css --watch",

@@ -1,5 +1,31 @@
 name: Deploy to GitHub Pages
 
+# ---------------------------------------------------------------------------
+# TEMPLATE USERS – read before enabling this workflow
+# ---------------------------------------------------------------------------
+# This workflow builds the app with a sub-path base and deploys it to GitHub
+# Pages.  By default it targets /Portf/ (the showcase deployment at
+# https://projects.sillylittle.tech/Portf/).
+#
+# If you are using this as a template for your own project you will need to
+# update TWO values so that assets load from the correct path:
+#
+#   1. VITE_BASE_URL (in the Build step below)
+#      Set this to "/<your-repo-name>/" — include both slashes.
+#      Example: if your repo is "github.com/jane/my-portfolio", use "/my-portfolio/".
+#      If you are deploying to a root domain (e.g. https://jane.github.io) or a
+#      custom domain pointed at the repo root, set VITE_BASE_URL to "/" or
+#      remove the env block entirely.
+#
+#   2. The "base" value in vite.config.ts
+#      Normally this is driven automatically by VITE_BASE_URL above, so you
+#      only need to change it if you want to hard-code the path instead of
+#      using the environment variable.
+#
+# The router (src/utils/navigation.ts) reads import.meta.env.BASE_URL at
+# runtime and strips the prefix automatically — no other files need changing.
+# ---------------------------------------------------------------------------
+
 on:
   push:
     branches: ["main"]
@@ -29,8 +55,12 @@ jobs:
 
       - name: Install dependencies
         run: npm clean-install --progress=false
-        
+
       - name: Build
+        # TEMPLATE USERS: change /Portf/ below to /<your-repo-name>/ — or
+        # remove the env block entirely when deploying to a root domain.
+        env:
+          VITE_BASE_URL: /Portf/
         run: npm run build:pages
 
       - name: Upload Pages artifact
