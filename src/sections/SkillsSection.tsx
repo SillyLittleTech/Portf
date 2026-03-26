@@ -150,6 +150,7 @@ function SkillsBoard({
 }
 
 export function SkillsSection() {
+  const { t } = useTranslation();
   const { data: remoteSkills, debugAttributes: skillsDebugAttributes } =
     useRemoteData<string[]>({
       resource: SKILLS_RESOURCE,
@@ -221,10 +222,9 @@ export function SkillsSection() {
       <div className="card-surface space-y-8">
         <SectionHeader
           id="skills"
+          icon="material-symbols:auto-awesome-rounded"
           label={t.skills.title}
-          eyebrow="Strengths"
           eyebrow={t.skills.eyebrow}
-          eyebrow="Strengths"
         />
         <SkillsBoard
           skills={skills}
