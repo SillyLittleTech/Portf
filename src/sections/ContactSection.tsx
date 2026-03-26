@@ -46,6 +46,8 @@ const TURNSTILE_SCRIPT_SRC =
 // Default placeholders for template usage. Set VITE_TURNSTILE_SITE_KEY or
 // VITE_TURNSTYLE_SITE in your environment to enable captcha checks.
 const DEFAULT_TURNSTYLE_SITE_KEY = "";
+const rawTurnstileSiteKey =
+  (import.meta.env.VITE_TURNSTILE_SITE_KEY ??
     import.meta.env.VITE_TURNSTYLE_SITE ??
     DEFAULT_TURNSTYLE_SITE_KEY ??
     "") ||
