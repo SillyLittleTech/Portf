@@ -1,25 +1,25 @@
 {
   "nav": {
     "home": "Accueil",
-    "about": "Moi",
+    "about": "À propos",
     "experience": "Expérience",
     "education": "Éducation",
     "certifications": "Certifications",
     "projects": "Passe-temps",
-    "skills": "Capacités",
-    "contact": "Courrier"
+    "skills": "Compétences",
+    "contact": "Contact"
   },
   "hero": {
     "greeting": "Bonjour, je suis",
-    "name": "Kiya Rose",
+    "name": "Votre nom",
     "wave": "👋",
-    "headline": "Professionnelle en Formation en TI Santé et Support",
+    "headline": "Votre accroche — ex. Ingénieur frontend, designer ou créateur de produits",
     "description": "Je passe mon temps libre à créer des projets de code tout en me préparant à aider des équipes à temps plein dans les domaines de la TI santé et du support technique."
   },
   "about": {
     "title": "À propos",
     "eyebrow": "Profil",
-    "description": "Je suis une professionnelle en TI cherchant à acquérir de l'expérience en administration de bureau tout en poursuivant mon Certificat de Facturation et Codage. J'adore les jeux solo avec une histoire et réfléchir trop. J'aime aussi écrire de temps en temps :3"
+    "description": "Un bref aperçu de qui vous êtes et pourquoi vous faites les choses."
   },
   "experience": {
     "title": "Expérience",
@@ -31,10 +31,10 @@
   },
   "certifications": {
     "title": "Certifications",
-    "eyebrow": "Accréditations Professionnelles"
+    "eyebrow": "Titres Professionnels"
   },
   "projects": {
-    "title": "Projets Personnels",
+    "title": "Passe-temps",
     "eyebrow": "Projets Personnels"
   },
   "skills": {

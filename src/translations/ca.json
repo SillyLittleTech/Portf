@@ -1,25 +1,25 @@
 {
   "nav": {
     "home": "Inici",
-    "about": "Jo",
+    "about": "Sobre mi",
     "experience": "Feina",
     "education": "Educació",
-    "certifications": "Llicència",
-    "projects": "Afició",
+    "certifications": "Certificacions",
+    "projects": "Aficions",
     "skills": "Habilitats",
     "contact": "Contacte"
   },
   "hero": {
     "greeting": "Hola, sóc",
-    "name": "Kiya Rose",
+    "name": "El vostre nom",
     "wave": "👋",
-    "headline": "Treballadors de TI aprenent suport sanitari",
+    "headline": "El vostre lema — p. ex. Enginyer frontend, dissenyador o creador de productes",
     "description": "Dedico el meu temps lliure a construir projectes de codi mentre em preparo per ajudar equips a temps complet en TI de salut i suport tècnic."
   },
   "about": {
     "title": "Sobre mi",
     "eyebrow": "Perfil",
-    "description": "Sóc un professional de TI que busca adquirir experiència en administració d'oficines mentre persegueixo el meu Certificat de Facturació i Codificació. M'encanten els jocs d'un sol jugador amb història i pensar massa. També m'agrada escriure de tant en tant :3"
+    "description": "Una breu presentació de qui sou i per què feu les coses."
   },
   "experience": {
     "title": "Experiència",
@@ -34,7 +34,7 @@
     "eyebrow": "Credencials Professionals"
   },
   "projects": {
-    "title": "Projectes Personals",
+    "title": "Aficions",
     "eyebrow": "Projectes Personals"
   },
   "skills": {

@@ -4,22 +4,22 @@
     "about": "Over",
     "experience": "Ervaring",
     "education": "Opleiding",
-    "certifications": "Licenties",
-    "projects": "Spullen",
+    "certifications": "Certificeringen",
+    "projects": "Hobbyprojecten",
     "skills": "Vaardigheden",
     "contact": "Contact"
   },
   "hero": {
     "greeting": "Hallo, ik ben",
-    "name": "Kiya Rose",
+    "name": "Uw naam",
     "wave": "👋",
-    "headline": "Gezondheids-IT & Ondersteuningsprofessional in Opleiding",
+    "headline": "Uw tagline — bijv. Frontend-engineer, ontwerper of productmaker",
     "description": "Ik besteed mijn vrije tijd aan het bouwen van codeprojecten terwijl ik me voorbereid om fulltime teams te helpen met gezondheids-IT en technische ondersteuning."
   },
   "about": {
     "title": "Over",
     "eyebrow": "Profiel",
-    "description": "Ik ben een IT-professional die kantooradministratie-ervaring wil opdoen terwijl ik mijn Facturatie- en Coderingscertificaat behaal. Ik hou van singleplayer verhaalspellen en overdenken. Ik schrijf ook graag soms :3"
+    "description": "Een korte beschrijving van wie u bent en waarom u de dingen doet."
   },
   "experience": {
     "title": "Ervaring",
@@ -31,7 +31,7 @@
   },
   "certifications": {
     "title": "Certificeringen",
-    "eyebrow": "Professionele Kwalificaties"
+    "eyebrow": "Professionele Certificaten"
   },
   "projects": {
     "title": "Hobbyprojecten",
