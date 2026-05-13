@@ -2,11 +2,12 @@ import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import type { PropsWithChildren } from "react";
 import { ThemeContext, type Theme } from "./theme-context";
 import { safeConsoleWarn } from "../utils/errorSanitizer";
-
-// LocalStorage keys for theme prefs. Rename these if you fork the template to
-// avoid colliding with other apps in the same browser profile.
-const THEME_STORAGE_KEY = "template-theme";
-const USER_PREFERENCE_KEY = "template-theme-user-set";
+import {
+  THEME_STORAGE_KEY,
+  USER_PREFERENCE_KEY,
+  getPreferredTheme,
+  hasUserSetTheme,
+} from "../theme/storage";
 
 function applyTheme(theme: Theme, userHasSetTheme: boolean) {
   if (typeof document === "undefined") return;
@@ -43,33 +44,6 @@ function applyTheme(theme: Theme, userHasSetTheme: boolean) {
     root.removeAttribute("data-user-theme");
   } else {
     root.dataset.userTheme = theme;
-  }
-}
-
-function getPreferredTheme(): Theme {
-  if (typeof window === "undefined") return "light";
-
-  try {
-    const stored = window.localStorage.getItem(
-      THEME_STORAGE_KEY,
-    ) as Theme | null;
-    if (stored === "light" || stored === "dark") return stored;
-  } catch (error) {
-    safeConsoleWarn("Failed to read theme from localStorage", error);
-  }
-
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
-}
-
-function hasUserSetTheme(): boolean {
-  if (typeof window === "undefined") return false;
-
-  try {
-    return window.localStorage.getItem(USER_PREFERENCE_KEY) === "true";
-  } catch (error) {
-    safeConsoleWarn("Failed to read user preference from localStorage", error);
-    return false;
   }
 }
 

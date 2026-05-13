@@ -21,6 +21,12 @@ const BUILD_SIGNATURE =
   typeof __BUILD_TIME__ === "string" ? __BUILD_TIME__ : "dev-local";
 const CACHE_KEY_PREFIX = `${CACHE_NAMESPACE}::${BUILD_SIGNATURE}::` as const;
 
+const BYPASS_REMOTE_CACHE =
+  import.meta.env.VITE_REMOTE_DATA_BYPASS_CACHE === "true" ||
+  // When a real remote base is configured, treat it as the source of truth.
+  // Skip caching so updates to the remote JSON reflect immediately.
+  Boolean(import.meta.env.VITE_REMOTE_DATA_URL);
+
 export type RemoteDataStatus = "fallback" | "loaded" | "error";
 
 type CacheState = "miss" | "hit" | "stale";
@@ -37,6 +43,22 @@ type UseRemoteDataResult<TData> = {
   debugAttributes: Record<string, string>;
 };
 
+/** Synced JSON from data-converter uses `{ socialsFallback, socialsPlaceholder, __meta }` etc. */
+function normalizeRemoteExport<TData>(value: unknown, resource: string): TData {
+  if (Array.isArray(value)) {
+    return value as TData;
+  }
+  if (value && typeof value === "object") {
+    const base = resource.charAt(0).toLowerCase() + resource.slice(1);
+    const fallbackKey = `${base}Fallback`;
+    const record = value as Record<string, unknown>;
+    if (fallbackKey in record) {
+      return record[fallbackKey] as TData;
+    }
+  }
+  return value as TData;
+}
+
 export function useRemoteData<TData>(
   options: UseRemoteDataOptions<TData>,
 ): UseRemoteDataResult<TData> {
@@ -45,12 +67,14 @@ export function useRemoteData<TData>(
     if (!REMOTE_DATA_ENABLED) {
       return null;
     }
-    return readCachedData<TData>(resource);
+    return BYPASS_REMOTE_CACHE ? null : readCachedData<TData>(resource);
   }, [resource]);
   const fallbackRef = useRef(fallbackData);
   const placeholderRef = useRef(placeholderData);
-  const [data, setData] = useState<TData>(
-    initialCache ? initialCache.data : fallbackData,
+  const [data, setData] = useState<TData>(() =>
+    initialCache
+      ? normalizeRemoteExport(initialCache.data as unknown, resource)
+      : fallbackData,
   );
   const [status, setStatus] = useState<RemoteDataStatus>(
     initialCache ? "loaded" : "fallback",
@@ -84,13 +108,13 @@ export function useRemoteData<TData>(
       };
     }
 
-    const cachedEntry = readCachedData<TData>(resource);
+    const cachedEntry = BYPASS_REMOTE_CACHE ? null : readCachedData<TData>(resource);
     const cacheIsFresh = cachedEntry
       ? isCacheFresh(cachedEntry.cachedAt)
       : false;
 
     if (cachedEntry) {
-      setData(cachedEntry.data);
+      setData(normalizeRemoteExport(cachedEntry.data as unknown, resource));
       setStatus("loaded");
       setCacheState(cacheIsFresh ? "hit" : "stale");
     } else {
@@ -99,7 +123,7 @@ export function useRemoteData<TData>(
       setCacheState("miss");
     }
 
-    if (cacheIsFresh) {
+    if (cacheIsFresh && !BYPASS_REMOTE_CACHE) {
       return () => {
         isMounted = false;
         controller.abort();
@@ -130,16 +154,22 @@ export function useRemoteData<TData>(
         setData(remoteData);
         setStatus("loaded");
         setCacheState("hit");
-        writeCachedData(resource, remoteData);
+        if (!BYPASS_REMOTE_CACHE) {
+          writeCachedData(resource, remoteData);
+        }
       } catch (error) {
         if (!isMounted || controller.signal.aborted) {
           return;
         }
 
         console.error(`Failed to load ${resource} data`, error);
-        const fallbackCache = readCachedData<TData>(resource);
+        const fallbackCache = BYPASS_REMOTE_CACHE
+          ? null
+          : readCachedData<TData>(resource);
         if (fallbackCache) {
-          setData(fallbackCache.data);
+          setData(
+            normalizeRemoteExport(fallbackCache.data as unknown, resource),
+          );
           setStatus("loaded");
           setCacheState(isCacheFresh(fallbackCache.cachedAt) ? "hit" : "stale");
           return;
@@ -180,7 +210,7 @@ function parseRemotePayload<TData>(raw: string, resource: string): TData {
     if (value === undefined || value === null) {
       throw new Error("Parsed remote payload was empty");
     }
-    return value;
+    return normalizeRemoteExport<TData>(value, resource);
   } catch (parseError) {
     const extracted = extractJsonFromRtf(raw);
     if (!extracted) {
@@ -192,7 +222,7 @@ function parseRemotePayload<TData>(raw: string, resource: string): TData {
     if (value === undefined || value === null) {
       throw new Error("Extracted remote payload was empty");
     }
-    return value;
+    return normalizeRemoteExport<TData>(value, resource);
   }
 }
 

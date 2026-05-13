@@ -107,4 +107,20 @@ test.describe("Theme Consistency", () => {
     );
     expect(userSetFlag).toBe("true");
   });
+
+  test("document theme class matches storage early on privacy-policy load", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      window.localStorage.setItem("template-theme", "dark");
+      window.localStorage.setItem("template-theme-user-set", "true");
+    });
+
+    await page.goto("/privacy-policy", { waitUntil: "domcontentloaded" });
+
+    const themeFromHtml = await page.evaluate(() =>
+      document.documentElement.classList.contains("dark") ? "dark" : "light",
+    );
+    expect(themeFromHtml).toBe("dark");
+  });
 });

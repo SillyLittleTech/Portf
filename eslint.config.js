@@ -4,7 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
-const reactHooksConfig = reactHooks.configs["recommended-latest"];
+const reactHooksConfig = reactHooks.configs.flat.recommended;
 const reactRefreshConfig = reactRefresh.configs.vite;
 
 const reactTsConfig = {
@@ -31,6 +31,8 @@ const reactTsConfig = {
   rules: {
     ...(reactHooksConfig.rules ?? {}),
     ...(reactRefreshConfig.rules ?? {}),
+    // Compiler-era rules are noisy for this codebase; keep classic hooks lint only.
+    "react-hooks/set-state-in-effect": "off",
   },
   settings: {
     ...(reactHooksConfig.settings ?? {}),
@@ -56,12 +58,41 @@ const nodeConfig = {
   },
 };
 
+const browserScriptsConfig = {
+  files: ["public/scripts/**/*.js"],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: {
+      ...globals.browser,
+    },
+  },
+};
+
+const browserToolsTsConfig = {
+  files: ["src/tools/visualizeme.ts"],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: {
+      ...globals.browser,
+    },
+  },
+};
+
 export default [
   {
     ignores: ["dist"],
   },
+  browserScriptsConfig,
+  browserToolsTsConfig,
   nodeConfig,
   js.configs.recommended,
   ...tsRecommended,
   reactTsConfig,
+  {
+    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
+    rules: {
+      // ESLint 10 recommended enables this; existing rethrows omit `cause`.
+      "preserve-caught-error": "off",
+    },
+  },
 ];
