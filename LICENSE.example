@@ -39,7 +39,7 @@ Choose the license that aligns with how you want others to use and contribute to
 
 - Fork the repo.
 - Update `LICENSE` (change copyright line and year).
-- Update `README.md` and `public/fallback/index.html` with your site name and contact info.
+- Update `README.md` and `public/index.html` with your site name and contact info.
 - Replace `src/data/*` content with your portfolio data.
 - Update `package.json` `name` and `license` fields.
 
