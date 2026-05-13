@@ -33,14 +33,11 @@ npm run test:e2e
 
 ## Data loading (remote + fallback)
 
-Remote sync/build behavior is handled by:
+The app uses `src/hooks/useRemoteData.ts`.
 
-- `scripts/sync-remote-data.mjs`
-- `src/hooks/useRemoteData.ts`
-
-- If **`VITE_REMOTE_DATA_URL` is set**, build scripts sync `*.json` resources into `public/__remote-data/` and the app reads those same-origin files at runtime.
-- If **`VITE_REMOTE_DATA_URL` is not set**, the sync output is removed and the app uses local fallback data from `src/data/*`.
-- If remote mode is enabled but a resource cannot be loaded, sections show placeholder data (they do not silently swap to local fallback data).
+- If **`VITE_REMOTE_DATA_URL` is set**, data is fetched from that remote endpoint.
+- If **`VITE_REMOTE_DATA_URL` is not set**, the app uses local fallback data from `src/data/*`.
+- Remote errors show placeholder content instead of silently swapping to local fallback data.
 
 This keeps behavior predictable and easier to debug for template users.
 

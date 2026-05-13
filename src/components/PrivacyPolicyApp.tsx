@@ -1,4 +1,4 @@
-import { PrivacyPolicyPage } from "../views/PrivacyPolicyPage";
+import { PrivacyPolicyPage } from "../pages/PrivacyPolicyPage";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { ThemeProvider } from "../providers/ThemeProvider";
 import { LanguageProvider } from "../providers/LanguageProvider";
