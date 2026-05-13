@@ -10,19 +10,19 @@ name: Deploy to GitHub Pages
 # If you are using this as a template for your own project you will need to
 # update TWO values so that assets load from the correct path:
 #
-#   1. BASE_PATH (in the Build step below)
+#   1. VITE_BASE_URL (in the Build step below)
 #      Set this to "/<your-repo-name>/" — include both slashes.
 #      Example: if your repo is "github.com/jane/my-portfolio", use "/my-portfolio/".
 #      If you are deploying to a root domain (e.g. https://jane.github.io) or a
-#      custom domain pointed at the repo root, set BASE_PATH to "/" or
+#      custom domain pointed at the repo root, set VITE_BASE_URL to "/" or
 #      remove the env block entirely.
 #
-#   2. The "base" value in astro.config.mjs
-#      Normally this is driven automatically by BASE_PATH above, so you
+#   2. The "base" value in vite.config.ts
+#      Normally this is driven automatically by VITE_BASE_URL above, so you
 #      only need to change it if you want to hard-code the path instead of
 #      using the environment variable.
 #
-# The navigation helper (src/utils/navigation.ts) reads import.meta.env.BASE_URL at
+# The router (src/utils/navigation.ts) reads import.meta.env.BASE_URL at
 # runtime and strips the prefix automatically — no other files need changing.
 # ---------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ jobs:
         # TEMPLATE USERS: change /Portf/ below to /<your-repo-name>/ — or
         # remove the env block entirely when deploying to a root domain.
         env:
-          BASE_PATH: /Portf/
+          VITE_BASE_URL: /Portf/
         run: npm run build:pages
 
       - name: Upload Pages artifact

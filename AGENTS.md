@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 
 - `src/` contains the application code: `sections/` owns page sections, `components/` provides shared UI, `data/` holds portfolio content and helper metadata (for example the build label generator), and `providers/` exposes the theme context.
-- Tailwind styles live in `src/index.css`, utilities in `src/utils/`, and global config in `tailwind.config.js`, `postcss.config.js`, and `astro.config.mjs`.
+- Tailwind styles live in `src/index.css`, utilities in `src/utils/`, and global config in `tailwind.config.js`, `postcss.config.js`, and `vite.config.ts`.
 - `npm run build` outputs to `dist/`, which Firebase Hosting serves via `firebase.json`.
 - `.github/workflows/` houses CI/CD pipelines—update them when scripts or deploy behavior changes.
 - Top-level layout pieces (`SiteHeader`, `PrimaryNav`, `SiteFooter`) live in `src/App.tsx`; keep large JSX trees broken into helpers to satisfy lint rules.
@@ -11,7 +11,7 @@
 	line in any redistribution or derived work. Do not remove or replace this license without explicit permission from
 	the copyright holder. When referencing the license in documentation, point to `LICENSE` in the repo.
 - `src/data/build.ts` exposes helpers for the build label and build timestamp: the label stores a random prefix in `localStorage` keyed by the build signature so it only changes when the code does, and `getBuildUpdatedAt()` surfaces the deploy timestamp for privacy/legal copy—leave that flow intact.
-- `src/pages/index.astro`, `src/pages/privacy-policy.astro`, and `src/utils/navigation.ts` handle routing; Astro owns page-level routes while React preserves the existing interactive layout.
+- `src/AppRouter.tsx`, `src/pages/PrivacyPolicyPage.tsx`, and `src/utils/navigation.ts` handle lightweight client-side routing so `/privacy-policy` renders inside the React app without duplicating static assets.
 
 ## Environment Variables
 
@@ -20,9 +20,9 @@
 ## Build, Test, and Development Commands
 
 - `npm install` (or `npm ci` in CI) installs dependencies; rerun after adding libraries like Framer Motion or @dnd-kit.
-- `npm run dev` launches Astro with hot reloading at http://localhost:4321.
-- `npm run lint` runs `astro check`; keep the tree warning-free before opening a PR.
-- `npm run build` creates a static `dist/` bundle for Cloudflare Pages/Firebase Hosting.
+- `npm run dev` launches Vite with hot reloading at http://localhost:5173.
+- `npm run lint` runs ESLint; keep the tree warning-free before opening a PR.
+- `npm run build` compiles TypeScript and bundles the app for Firebase Hosting.
 
 ## Coding Style & Naming Conventions
 
@@ -79,7 +79,7 @@ All security headers are centrally defined in `security-headers.config.ts` and d
 
 - `public/_headers` (for Cloudflare Pages - primary deployment)
 - `firebase.json` (for Firebase Hosting - reference/backup)
-- `scripts/verify-security-headers.mjs` parity checks
+- `vite.config.ts` (for local preview server)
 
 Current security headers include:
 
@@ -121,9 +121,13 @@ All error messages are sanitized via `src/utils/errorSanitizer.ts` to prevent in
 - ErrorBoundary component catches React errors and shows user-friendly messages
 - Production mode provides generic messages; development mode shows debug info
 
-### CSS Tooling
+### PostCSS CLI
 
-Tailwind is processed through Astro/Vite during `npm run dev` and `npm run build`; no standalone CSS build/watch command is required for normal workflows.
+The project includes PostCSS CLI for enhanced Tailwind CSS workflows:
+
+- `npm run css:build` - Build CSS using PostCSS
+- `npm run css:watch` - Watch and rebuild CSS
+- Fully compatible with existing Vite build process
 
 ## GitHub Automation
 
