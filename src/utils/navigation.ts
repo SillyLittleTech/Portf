@@ -13,15 +13,15 @@ type NavigationEvent = CustomEvent<string>;
 // URL reported by the browser includes that prefix, so window.location.pathname
 // looks like "/Portf/privacy-policy" instead of just "/privacy-policy".
 //
-// Vite embeds the configured base (set via VITE_BASE_URL at build time) into
-// import.meta.env.BASE_URL, so we read it here to strip the prefix before
+// The build tool embeds the configured base path (set via BASE_PATH in this
+// template) into import.meta.env.BASE_URL, so we read it here to strip the prefix before
 // matching routes and re-apply it before calling history.pushState.
 //
 // Template users: you do NOT need to change anything in this file.
-//   • Deploying to a root domain?  Leave VITE_BASE_URL unset.  BASE_PATH will
+//   • Deploying to a root domain?  Leave BASE_PATH unset.  BASE_PATH will
 //     be "" and both stripBasePath / addBasePath are transparent no-ops.
-//   • Deploying to a sub-path?  Set VITE_BASE_URL in your build command or CI
-//     environment (see vite.config.ts and package.json for details).  This file
+//   • Deploying to a sub-path?  Set BASE_PATH in your build command or CI
+//     environment (see astro.config.mjs and package.json for details).  This file
 //     picks it up automatically through import.meta.env.BASE_URL.
 // ---------------------------------------------------------------------------
 const BASE_PATH = (() => {
@@ -83,8 +83,8 @@ export function navigateTo(path: string) {
   const normalized = normalizePath(path);
   const current = getCurrentPath();
   if (normalized === current) return;
-  window.history.pushState({}, "", addBasePath(normalized));
-  dispatchNavigation(normalized);
+  const target = addBasePath(normalized);
+  window.location.assign(target);
 }
 
 function dispatchNavigation(path: string) {

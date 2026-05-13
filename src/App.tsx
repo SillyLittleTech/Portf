@@ -137,7 +137,7 @@ function LogoLink({ theme }: { theme: Theme }) {
         className="text-xl text-accent sm:text-2xl"
         aria-hidden="true"
       />
-      <AdminHint>Kiya Rose</AdminHint>
+      <AdminHint>Your Name</AdminHint>
     </a>
   );
 }

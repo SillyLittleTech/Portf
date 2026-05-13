@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
-// NOTE: Template-friendly remote data URL. In production set VITE_REMOTE_DATA_URL
-// to your own data host. During development the dev server serves local fixtures
-// from `/__remote-data/data`.
-const DATA_BASE_URL = import.meta.env.DEV
-  ? "/__remote-data/data"
-  : (import.meta.env.VITE_REMOTE_DATA_URL as string) || "https://data.example.com/data";
+// NOTE: Remote data is opt-in. Set VITE_REMOTE_DATA_URL to enable remote fetches.
+// When no URL is configured, components use their local fallback data directly.
+export function resolveRemoteDataBaseUrl(rawUrl: string | undefined): string | null {
+  const normalized = (rawUrl ?? "").trim().replace(/\/$/, "");
+  return normalized.length > 0 ? normalized : null;
+}
+
+const DATA_BASE_URL = resolveRemoteDataBaseUrl(
+  import.meta.env.VITE_REMOTE_DATA_URL as string | undefined,
+);
+const REMOTE_DATA_ENABLED = DATA_BASE_URL !== null;
 
 // LocalStorage namespace for cached remote data. Rename if you fork the template
 // to avoid collisions with other apps in the browser.
@@ -35,10 +40,12 @@ export function useRemoteData<TData>(
   options: UseRemoteDataOptions<TData>,
 ): UseRemoteDataResult<TData> {
   const { resource, fallbackData, placeholderData } = options;
-  const initialCache = useMemo(
-    () => readCachedData<TData>(resource),
-    [resource],
-  );
+  const initialCache = useMemo(() => {
+    if (!REMOTE_DATA_ENABLED) {
+      return null;
+    }
+    return readCachedData<TData>(resource);
+  }, [resource]);
   const fallbackRef = useRef(fallbackData);
   const placeholderRef = useRef(placeholderData);
   const [data, setData] = useState<TData>(
@@ -65,6 +72,16 @@ export function useRemoteData<TData>(
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
+
+    if (!REMOTE_DATA_ENABLED) {
+      setData(fallbackRef.current);
+      setStatus("fallback");
+      setCacheState("miss");
+      return () => {
+        isMounted = false;
+        controller.abort();
+      };
+    }
 
     const cachedEntry = readCachedData<TData>(resource);
     const cacheIsFresh = cachedEntry
@@ -144,6 +161,7 @@ export function useRemoteData<TData>(
   const debugAttributes = useMemo(
     () => ({
       "data-remote-resource": resource,
+      "data-remote-enabled": REMOTE_DATA_ENABLED ? "true" : "false",
       "data-remote-status": status,
       "data-remote-loaded": status === "loaded" ? "true" : "false",
       "data-remote-cache": cacheState,
