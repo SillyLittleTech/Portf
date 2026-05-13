@@ -1,11 +1,3 @@
-// Custom event used for client-side navigation hooks. Keep this consistent if
-// you add listeners elsewhere in the app.
-const NAVIGATION_EVENT = "template-portfolio:navigate";
-
-type NavigationListener = (path: string) => void;
-
-type NavigationEvent = CustomEvent<string>;
-
 // ---------------------------------------------------------------------------
 // BASE PATH HANDLING
 // ---------------------------------------------------------------------------
@@ -85,36 +77,6 @@ export function navigateTo(path: string) {
   if (normalized === current) return;
   const target = addBasePath(normalized);
   window.location.assign(target);
-}
-
-function dispatchNavigation(path: string) {
-  if (!isWindowAvailable()) return;
-  const event: NavigationEvent = new CustomEvent(NAVIGATION_EVENT, {
-    detail: path,
-  });
-  window.dispatchEvent(event);
-}
-
-export function subscribeToNavigation(listener: NavigationListener) {
-  if (!isWindowAvailable()) return () => undefined;
-  const handler = (event: Event) => {
-    const customEvent = event as NavigationEvent;
-    const nextPath =
-      typeof customEvent.detail === "string"
-        ? customEvent.detail
-        : getCurrentPath();
-    listener(normalizePath(nextPath));
-  };
-
-  window.addEventListener(NAVIGATION_EVENT, handler as EventListener);
-  return () => {
-    window.removeEventListener(NAVIGATION_EVENT, handler as EventListener);
-  };
-}
-
-export function canUseClientNavigation() {
-  if (!isWindowAvailable()) return false;
-  return window.history.length > 1;
 }
 
 export function goBackOrNavigateHome() {

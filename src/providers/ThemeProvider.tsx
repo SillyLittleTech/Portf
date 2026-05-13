@@ -118,7 +118,17 @@ export function ThemeProvider({ children }: PropsWithChildren) {
       theme,
       toggleTheme: () => {
         setUserHasSetTheme(true);
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+        setTheme((prev) => {
+          const nextTheme: Theme = prev === "light" ? "dark" : "light";
+          try {
+            // Persist immediately so rapid reloads keep the user's choice.
+            window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+            window.localStorage.setItem(USER_PREFERENCE_KEY, "true");
+          } catch (error) {
+            safeConsoleWarn("Failed to save theme to localStorage", error);
+          }
+          return nextTheme;
+        });
       },
     }),
     [theme],
