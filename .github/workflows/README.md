@@ -43,7 +43,7 @@ This directory contains automated workflows for the portfolio project. Workflows
 - **`security-headers-parity.yml`** - Security Headers Verification
   - Verifies security headers are synchronized across:
     - `security-headers.config.ts`
-    - `vite.config.ts`
+    - `astro.config.mjs`
     - `public/_headers`
     - `firebase.json`
 
