@@ -7,7 +7,7 @@
 //
 // The build tool embeds the configured base path (set via BASE_PATH in this
 // template) into import.meta.env.BASE_URL, so we read it here to strip the prefix before
-// matching routes and re-apply it before calling history.pushState.
+// matching routes and re-apply it before calling window.location.assign.
 //
 // Template users: you do NOT need to change anything in this file.
 //   • Deploying to a root domain?  Leave BASE_PATH unset.  BASE_PATH will
@@ -55,8 +55,8 @@ function stripBasePath(pathname: string): string {
   return pathname;
 }
 
-/** Prepend the deployment base path to an app-relative path before pushing to
- *  browser history.  e.g. with BASE_PATH="/Portf":  "/privacy-policy" →
+/** Prepend the deployment base path to an app-relative path before assigning
+ *  browser location.  e.g. with BASE_PATH="/Portf":  "/privacy-policy" →
  *  "/Portf/privacy-policy".  Transparent no-op when no base path is set.
  */
 function addBasePath(path: string): string {
