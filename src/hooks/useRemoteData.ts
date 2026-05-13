@@ -11,6 +11,7 @@ const DATA_BASE_URL = resolveRemoteDataBaseUrl(
   import.meta.env.VITE_REMOTE_DATA_URL as string | undefined,
 );
 const REMOTE_DATA_ENABLED = DATA_BASE_URL !== null;
+const REMOTE_DATA_PATH = "/__remote-data";
 
 // LocalStorage namespace for cached remote data. Rename if you fork the template
 // to avoid collisions with other apps in the browser.
@@ -107,7 +108,7 @@ export function useRemoteData<TData>(
 
     async function loadRemoteData() {
       try {
-        const response = await fetch(`${DATA_BASE_URL}/${resource}.json`, {
+        const response = await fetch(`${REMOTE_DATA_PATH}/${resource}.json`, {
           method: "GET",
           headers: { Accept: "application/json" },
           signal: controller.signal,
@@ -120,7 +121,7 @@ export function useRemoteData<TData>(
         }
 
         const payloadText = await response.text();
-        const remoteData = parseRemotePayload<TData>(payloadText);
+        const remoteData = parseRemotePayload<TData>(payloadText, resource);
 
         if (!isMounted) {
           return;
@@ -172,10 +173,10 @@ export function useRemoteData<TData>(
   return { data, status, debugAttributes };
 }
 
-function parseRemotePayload<TData>(raw: string): TData {
+function parseRemotePayload<TData>(raw: string, resource: string): TData {
   try {
     const parsed = JSON.parse(raw) as unknown;
-    const value = unwrapRemotePayload<TData>(parsed);
+    const value = unwrapRemotePayload<TData>(parsed, resource);
     if (value === undefined || value === null) {
       throw new Error("Parsed remote payload was empty");
     }
@@ -187,7 +188,7 @@ function parseRemotePayload<TData>(raw: string): TData {
     }
 
     const parsed = JSON.parse(extracted) as unknown;
-    const value = unwrapRemotePayload<TData>(parsed);
+    const value = unwrapRemotePayload<TData>(parsed, resource);
     if (value === undefined || value === null) {
       throw new Error("Extracted remote payload was empty");
     }
@@ -195,14 +196,37 @@ function parseRemotePayload<TData>(raw: string): TData {
   }
 }
 
-function unwrapRemotePayload<TData>(payload: unknown): TData {
+function unwrapRemotePayload<TData>(payload: unknown, resource: string): TData {
   if (payload && typeof payload === "object" && !Array.isArray(payload)) {
-    const entries = Object.entries(payload as Record<string, unknown>).filter(
+    const source = payload as Record<string, unknown>;
+    const entries = Object.entries(source).filter(
       ([key]) => key !== "__meta",
     );
 
     if (entries.length === 1) {
       return entries[0][1] as TData;
+    }
+
+    const normalizedResource = resource.trim().toLowerCase();
+    const preferredKeys = [
+      normalizedResource,
+      `${normalizedResource}fallback`,
+      `${normalizedResource}data`,
+      `${normalizedResource}s`,
+    ];
+
+    for (const preferred of preferredKeys) {
+      const match = entries.find(([key]) => key.toLowerCase() === preferred);
+      if (match && match[1] !== undefined && match[1] !== null) {
+        return match[1] as TData;
+      }
+    }
+
+    const firstFallback = entries.find(([key]) =>
+      key.toLowerCase().endsWith("fallback"),
+    );
+    if (firstFallback && firstFallback[1] !== undefined) {
+      return firstFallback[1] as TData;
     }
   }
 

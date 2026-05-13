@@ -11,8 +11,10 @@ import { goBackOrNavigateHome } from "../utils/navigation";
 import { getBuildUpdatedAt } from "../data/build";
 
 // Replace these with your security and privacy contact addresses.
-const GDPR_CONTACT_EMAIL = (import.meta.env.VITE_GDPR_CONTACT as string) || "security@example.com";
-const PRIVACY_CONTACT_EMAIL = (import.meta.env.VITE_PRIVACY_CONTACT as string) || "privacy@example.com";
+const GDPR_CONTACT_EMAIL =
+  (import.meta.env.VITE_GDPR_CONTACT as string) || "security@example.com";
+const PRIVACY_CONTACT_EMAIL =
+  (import.meta.env.VITE_PRIVACY_CONTACT as string) || "privacy@example.com";
 
 type PolicySection = {
   title: string;
@@ -422,11 +424,9 @@ function PolicyIntro() {
       Your privacy matters. This Privacy Policy explains how the site owner
       (replace the name below) collects, uses, and safeguards personal
       information when you visit the deployed site, interact with the contact
-      form, or engage with analytics services.
-      {" "}
-      <AdminHint>Your Name</AdminHint>
-      , interact with the contact form, or engage with the analytics services
-      that power the site.
+      form, or engage with analytics services. <AdminHint>Your Name</AdminHint>,
+      interact with the contact form, or engage with the analytics services that
+      power the site.
     </p>
   );
 }
