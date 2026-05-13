@@ -7,19 +7,7 @@ export type Certification = {
 
 export const CERTIFICATIONS_RESOURCE = "Certifications";
 
-export const certificationsFallback: Certification[] = [
-  {
-    name: "Web Accessibility Foundations",
-    issuer: "W3C",
-    date: "2024",
-    link: "https://www.w3.org/WAI/fundamentals/",
-  },
-  {
-    name: "Cloud Fundamentals",
-    issuer: "Cloud Provider Academy",
-    date: "2023",
-  },
-];
+export const certificationsFallback: Certification[] = [];
 
 export const certificationsPlaceholder: Certification[] = [
   {
