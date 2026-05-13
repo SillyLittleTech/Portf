@@ -151,3 +151,13 @@ Use these keywords in PR title/body:
 - Full GitHub URLs to issues
 
 Multiple PRs can reference the same issue; status reflects the most recent PR action.
+
+## Cursor Cloud specific instructions
+
+- This is a static React/Vite/TypeScript portfolio site with no backend or database dependencies. All external services (Pageclip, Turnstile, GTM) degrade gracefully without API keys.
+- **Dev server**: `npm run dev` starts Vite on port 5173 with hot reload. No additional services need to be started.
+- **Lint**: `npm run lint` — as of the current commit, ESLint 10.3.0 has a pre-existing `ConfigError` related to plugin format in `eslint.config.js`. This is not caused by the cloud environment.
+- **Build**: `npm run build` runs `tsc -b && vite build` and outputs to `dist/`. A large-chunk warning for `visualizeme.html` is expected and non-blocking.
+- **E2E tests**: `npm run test:e2e` uses Playwright. Run `npx playwright install --with-deps chromium` first to download browser binaries. The Playwright config auto-starts a preview server on port 4173.
+- **No `npm test` script** exists — unit tests are not yet wired up. Only Playwright e2e tests are available.
+- **Environment variables** are all optional with safe defaults; see the "Environment Variables" section above. The app renders fully without any `.env.local` file.
