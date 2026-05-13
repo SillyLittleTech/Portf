@@ -34,8 +34,6 @@ jobs:
         run: npm clean-install --progress=false
 
       - name: Build
-        env:
-          BASE_PATH: /Portf/
         run: npm run build:pages
 
       - name: Upload Pages artifact
