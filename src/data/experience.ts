@@ -8,7 +8,24 @@ export type ExperienceEntry = {
 
 export const EXPERIENCE_RESOURCE = "Experience";
 
-export const experienceFallback: ExperienceEntry[] = [];
+export const experienceFallback: ExperienceEntry[] = [
+  {
+    company: "Example Co.",
+    role: "Product Designer",
+    dates: "2022 — Present",
+    description:
+      "Short description of the role and accomplishments with measurable outcomes.",
+    tech: ["Figma", "React", "TypeScript"],
+  },
+  {
+    company: "Acme Labs",
+    role: "Frontend Engineer",
+    dates: "2020 — 2022",
+    description:
+      "Built and shipped customer-facing features with an emphasis on performance and accessibility.",
+    tech: ["React", "Tailwind CSS", "Playwright"],
+  },
+];
 
 export const experiencePlaceholder: ExperienceEntry[] = [
   {
