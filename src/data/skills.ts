@@ -1,6 +1,13 @@
 export const SKILLS_RESOURCE = "Skills";
 
-export const skillsFallback: string[] = [];
+export const skillsFallback: string[] = [
+  "TypeScript",
+  "React",
+  "Accessibility",
+  "Testing",
+  "Design Systems",
+  "DevOps",
+];
 
 const skillIconEntries = [
   ["javascript", "simple-icons:javascript"],

@@ -1,11 +1,3 @@
-// Custom event used for client-side navigation hooks. Keep this consistent if
-// you add listeners elsewhere in the app.
-const NAVIGATION_EVENT = "template-portfolio:navigate";
-
-type NavigationListener = (path: string) => void;
-
-type NavigationEvent = CustomEvent<string>;
-
 // ---------------------------------------------------------------------------
 // BASE PATH HANDLING
 // ---------------------------------------------------------------------------
@@ -13,15 +5,15 @@ type NavigationEvent = CustomEvent<string>;
 // URL reported by the browser includes that prefix, so window.location.pathname
 // looks like "/Portf/privacy-policy" instead of just "/privacy-policy".
 //
-// Vite embeds the configured base (set via VITE_BASE_URL at build time) into
-// import.meta.env.BASE_URL, so we read it here to strip the prefix before
-// matching routes and re-apply it before calling history.pushState.
+// The build tool embeds the configured base path (set via BASE_PATH in this
+// template) into import.meta.env.BASE_URL, so we read it here to strip the prefix before
+// matching routes and re-apply it before calling window.location.assign.
 //
 // Template users: you do NOT need to change anything in this file.
-//   • Deploying to a root domain?  Leave VITE_BASE_URL unset.  BASE_PATH will
+//   • Deploying to a root domain?  Leave BASE_PATH unset.  BASE_PATH will
 //     be "" and both stripBasePath / addBasePath are transparent no-ops.
-//   • Deploying to a sub-path?  Set VITE_BASE_URL in your build command or CI
-//     environment (see vite.config.ts and package.json for details).  This file
+//   • Deploying to a sub-path?  Set BASE_PATH in your build command or CI
+//     environment (see astro.config.mjs and package.json for details).  This file
 //     picks it up automatically through import.meta.env.BASE_URL.
 // ---------------------------------------------------------------------------
 const BASE_PATH = (() => {
@@ -63,8 +55,8 @@ function stripBasePath(pathname: string): string {
   return pathname;
 }
 
-/** Prepend the deployment base path to an app-relative path before pushing to
- *  browser history.  e.g. with BASE_PATH="/Portf":  "/privacy-policy" →
+/** Prepend the deployment base path to an app-relative path before assigning
+ *  browser location.  e.g. with BASE_PATH="/Portf":  "/privacy-policy" →
  *  "/Portf/privacy-policy".  Transparent no-op when no base path is set.
  */
 function addBasePath(path: string): string {
@@ -83,38 +75,8 @@ export function navigateTo(path: string) {
   const normalized = normalizePath(path);
   const current = getCurrentPath();
   if (normalized === current) return;
-  window.history.pushState({}, "", addBasePath(normalized));
-  dispatchNavigation(normalized);
-}
-
-function dispatchNavigation(path: string) {
-  if (!isWindowAvailable()) return;
-  const event: NavigationEvent = new CustomEvent(NAVIGATION_EVENT, {
-    detail: path,
-  });
-  window.dispatchEvent(event);
-}
-
-export function subscribeToNavigation(listener: NavigationListener) {
-  if (!isWindowAvailable()) return () => undefined;
-  const handler = (event: Event) => {
-    const customEvent = event as NavigationEvent;
-    const nextPath =
-      typeof customEvent.detail === "string"
-        ? customEvent.detail
-        : getCurrentPath();
-    listener(normalizePath(nextPath));
-  };
-
-  window.addEventListener(NAVIGATION_EVENT, handler as EventListener);
-  return () => {
-    window.removeEventListener(NAVIGATION_EVENT, handler as EventListener);
-  };
-}
-
-export function canUseClientNavigation() {
-  if (!isWindowAvailable()) return false;
-  return window.history.length > 1;
+  const target = addBasePath(normalized);
+  window.location.assign(target);
 }
 
 export function goBackOrNavigateHome() {

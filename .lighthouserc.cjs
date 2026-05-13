@@ -1,10 +1,9 @@
-/* eslint-env node */
 module.exports = {
   ci: {
     collect: {
       // Use local preview so PRs don’t rely on prod
       startServerCommand:
-        "npm run build && npx vite preview --port 4173 --strictPort",
+        "npm run build && npm run preview -- --port 4173 --host 0.0.0.0",
       url: ["http://localhost:4173/"],
       numberOfRuns: 3,
     },
