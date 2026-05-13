@@ -27,7 +27,7 @@
     "framer-motion": "^12.38.0",
     "pg": "^8.20.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.5",
+    "react-dom": "^19.2.6",
     "tailwind-merge": "^3.6.0",
     "tmp": "^0.2.5",
     "wrangler": "^4.90.1"
