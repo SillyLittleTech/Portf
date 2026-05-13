@@ -19,7 +19,7 @@ Below are suggestions and quick checks to help you convert this repo into your o
     - Important: this template includes a BSD-3-Clause `LICENSE` that must be preserved as-is in the source
       when redistributing or publishing derived works (see `LICENSE.example` for how to add your own copyright
       attribution without removing the original line).
-  - `public/index.html` and `src/data/*` — replace demo content with your personal content.
+  - `public/fallback/index.html` and `src/data/*` — replace demo content with your personal content.
 
 - If you plan to accept outside contributions on your fork, add a `CODE_OF_CONDUCT.md`, a `PULL_REQUEST_TEMPLATE.md`, and/or an `ISSUE_TEMPLATE/` directory so contributors have clear expectations.
 
