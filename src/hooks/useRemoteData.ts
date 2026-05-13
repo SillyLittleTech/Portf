@@ -11,7 +11,10 @@ const DATA_BASE_URL = resolveRemoteDataBaseUrl(
   import.meta.env.VITE_REMOTE_DATA_URL as string | undefined,
 );
 const REMOTE_DATA_ENABLED = DATA_BASE_URL !== null;
-const REMOTE_DATA_PATH = `${import.meta.env.BASE_URL}__remote-data`;
+const REMOTE_DATA_PATH = `${import.meta.env.BASE_URL}__remote-data`.replace(
+  /\/{2,}/g,
+  "/",
+);
 
 // LocalStorage namespace for cached remote data. Rename if you fork the template
 // to avoid collisions with other apps in the browser.
