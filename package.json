@@ -27,7 +27,7 @@
     "@iconify/json": "^2.2.479",
     "@iconify/react": "^6.0.2",
     "@tailwindcss/vite": "^4.1.8",
-    "astro": "^6.3.8",
+    "astro": "^6.4.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
     "pg": "^8.21.0",
