@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@axe-core/playwright": "^4.11.3",
+    "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.61.0",
     "@tailwindcss/postcss": "^4.3.1",
