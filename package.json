@@ -52,7 +52,7 @@
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.9.0",
     "lychee": "^0.2.12",
-    "postcss": "^8.5.19",
+    "postcss": "^8.5.26",
     "postcss-cli": "^11.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "~7.0.2",
