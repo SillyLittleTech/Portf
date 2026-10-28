@@ -25,7 +25,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@iconify/json": "^2.2.544",
-    "@iconify/react": "^6.0.2",
+    "@iconify/react": "^6.0.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.0",
     "clsx": "^2.1.1",
