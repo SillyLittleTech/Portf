@@ -4,7 +4,6 @@ import {
   ROOT_KEY,
   NODE_HEIGHT,
   NODE_WIDTH,
-  VERTICAL_SPACING,
   createDiagramFromData,
   findNodeByPathKey,
   formatEditorValue,
